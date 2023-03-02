@@ -1,0 +1,483 @@
+{
+	"info": {
+		"_postman_id": "c56811dd-0fd5-4290-af55-87821d7868f0",
+		"name": "CoderDemo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12802855"
+	},
+	"item": [
+		{
+			"name": "/public - public route 200ok",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code response must be 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"basicUsername\",\r\n    \"password\": \"Basic1234*\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}public",
+					"host": [
+						"{{baseUrl}}public"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/auth/login - admin 200ok",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code response must be 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    const logindata = pm.response.json()\r",
+							"    pm.environment.set('token', logindata.token)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"adminUsername\",\r\n    \"password\": \"Admin1234*\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}auth/login",
+					"host": [
+						"{{baseUrl}}auth"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/tasks - must be admin 200ok",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code response must be 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"basicUsername\",\r\n    \"password\": \"Basic1234*\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}tasks",
+					"host": [
+						"{{baseUrl}}tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/tasks/create - must be admin 200ok",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code response must be 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
+							"function generateString(length) {\r",
+							"    let result = '';\r",
+							"    const charactersLength = characters.length;\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        result += characters.charAt(Math.floor(Math.random() * charactersLength));\r",
+							"    }\r",
+							"    return result;\r",
+							"}\r",
+							"\r",
+							"var title_task = generateString(20);\r",
+							"var desc_task = generateString(50);\r",
+							"\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"title_task\", title_task);\r",
+							"postman.setEnvironmentVariable(\"desc_task\", desc_task);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"{{title_task}}\",\r\n    \"description\": \"{{desc_task}}\",\r\n    \"completed\": false,\r\n    \"user_id\": \"63ffe006d933aff713c59ba9\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}tasks/create",
+					"host": [
+						"{{baseUrl}}tasks"
+					],
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/tasks - must be admin 200ok",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code response must be 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"basicUsername\",\r\n    \"password\": \"Basic1234*\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}tasks",
+					"host": [
+						"{{baseUrl}}tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/tasks/:user_id - must be user 401Unauthorized",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code response must be 401\", () => {\r",
+							"    pm.response.to.have.status(401);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}tasks/63ffe006d933aff713c59ba9",
+					"host": [
+						"{{baseUrl}}tasks"
+					],
+					"path": [
+						"63ffe006d933aff713c59ba9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/auth/login - user 200ok",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code response must be 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    const logindata = pm.response.json()\r",
+							"    pm.environment.set('token', logindata.token)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"basicUsername\",\r\n    \"password\": \"Basic1234*\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}auth/login",
+					"host": [
+						"{{baseUrl}}auth"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/tasks/:user_id - must be user 200ok",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code response must be 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    const tasksdata = pm.response.json()\r",
+							"    pm.environment.set('task_id', tasksdata[0]._id)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}tasks/63ffe006d933aff713c59ba9",
+					"host": [
+						"{{baseUrl}}tasks"
+					],
+					"path": [
+						"63ffe006d933aff713c59ba9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/tasks/create - must be user 200ok",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code response must be 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"task_id\": \"{{task_id}}\",\r\n    \"completed\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}tasks/63ffe006d933aff713c59ba9",
+					"host": [
+						"{{baseUrl}}tasks"
+					],
+					"path": [
+						"63ffe006d933aff713c59ba9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/tasks - must be admin 401Unauthorized",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code response must be 401\", () => {\r",
+							"    pm.response.to.have.status(401);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"basicUsername\",\r\n    \"password\": \"Basic1234*\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}tasks",
+					"host": [
+						"{{baseUrl}}tasks"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
