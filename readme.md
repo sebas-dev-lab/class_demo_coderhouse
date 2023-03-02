@@ -51,3 +51,6 @@
 
 
 
+## BASIC MODEL
+
+![image info](./pictures/model_example.jpg)
