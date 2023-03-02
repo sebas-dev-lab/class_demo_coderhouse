@@ -25,6 +25,8 @@ router.use("/test_report", (req, res) => {
 router.use("/auth", authRoutes); // Si se implementan rutas de registro o que manegen lógica de negocio, puede controlarse la autenticación en instancias posteriores
 
 // ========== Rutas Protegidas ** Requiere de token ============= //
-router.use("/tasks", taskRoutes); // Add => autenticationControl
+router.use("/tasks", 
+autenticationControl, 
+taskRoutes); // Add => autenticationControl
 
 export default router;

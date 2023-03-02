@@ -11,6 +11,8 @@ router.post("/login", controller.login);
 // Add autenticationControl adminAuthorizationControl
 router.get(
   "/users",
+  autenticationControl,
+  adminAuthorizationControl,
   controller.get_users
 );
 

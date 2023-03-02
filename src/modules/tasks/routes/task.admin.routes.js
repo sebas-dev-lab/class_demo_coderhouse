@@ -6,7 +6,11 @@ const router = Router();
 const controller = new TaskAdminControllers();
 
 // Add adminAuthorizationControl
-router.post("/create", controller.createTask);
-router.get("/", controller.getTasks);
+router.post("/create", 
+adminAuthorizationControl, 
+controller.createTask);
+router.get("/", 
+adminAuthorizationControl, 
+controller.getTasks);
 
 export default router;
