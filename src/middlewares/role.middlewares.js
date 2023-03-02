@@ -16,9 +16,9 @@ export const adminAuthorizationControl = async (req, res, next) => {
 
     next();
   } catch (err) {
-    res.status(401).json({
-      code: 401,
-      message: "Unauthoized.",
+    res.status(403).json({
+      code: 403,
+      message: "Forbiden.",
     });
   }
 };
@@ -32,9 +32,9 @@ export const basicUserAuthorizationControl = async (req, res, next) => {
     next();
   } catch (err) {
     console.log(err);
-    res.status(401).json({
-      code: 401,
-      message: "Unauthoized.",
+    res.status(403).json({
+      code: 403,
+      message: "Forbiden.",
     });
   }
 };

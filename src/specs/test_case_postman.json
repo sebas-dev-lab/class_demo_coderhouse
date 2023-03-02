@@ -101,9 +101,6 @@
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -117,15 +114,6 @@
 				},
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"basicUsername\",\r\n    \"password\": \"Basic1234*\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
 					"raw": "{{baseUrl}}tasks",
 					"host": [
@@ -301,14 +289,14 @@
 			"response": []
 		},
 		{
-			"name": "/tasks/:user_id - must be user 401Unauthorized",
+			"name": "/tasks/:user_id - must be user 403 Forbiden",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code response must be 401\", () => {\r",
-							"    pm.response.to.have.status(401);\r",
+							"pm.test(\"Status code response must be 403\", () => {\r",
+							"    pm.response.to.have.status(403);\r",
 							"})"
 						],
 						"type": "text/javascript"
@@ -473,14 +461,14 @@
 			"response": []
 		},
 		{
-			"name": "/tasks - must be admin 401Unauthorized",
+			"name": "/tasks - must be admin 403 Forbiden",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code response must be 401\", () => {\r",
-							"    pm.response.to.have.status(401);\r",
+							"pm.test(\"Status code response must be 403\", () => {\r",
+							"    pm.response.to.have.status(403);\r",
 							"})"
 						],
 						"type": "text/javascript"
