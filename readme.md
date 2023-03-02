@@ -1,6 +1,6 @@
 # Clase demo - CODERHOUSE - AUTENTICACION Y AUTORIZACION
 
-## Requicitos e instalación
+## Requisitos e instalación
 
 > **Tener instalado NodeJs**
 
