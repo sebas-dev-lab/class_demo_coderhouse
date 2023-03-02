@@ -1,4 +1,4 @@
 /node_modules
 package-*.json
 report.html
-/data
+data
