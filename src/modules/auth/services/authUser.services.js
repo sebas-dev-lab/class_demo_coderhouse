@@ -37,4 +37,25 @@ export default class AuthUserServices {
       };
     }
   }
+
+  async get_users() {
+    let status = 200;
+    try {
+      // ====== Find and control taks ======== //
+      const users = await AuthUserRepository.find_all_users();
+
+      return {
+        error: false,
+        status,
+        message: "Ok",
+        data: users,
+      };
+    } catch (e) {
+      return {
+        error: true,
+        status: status === 200 ? 409 : status,
+        message: e.message,
+      };
+    }
+  }
 }

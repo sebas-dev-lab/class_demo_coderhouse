@@ -136,6 +136,48 @@
 			"response": []
 		},
 		{
+			"name": "/auth/users- must be admin 200ok Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code response must be 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    const usersData = pm.response.json()\r",
+							"    pm.environment.set('user_id', usersData[1]._id)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}auth/users",
+					"host": [
+						"{{baseUrl}}auth"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/tasks/create - must be admin 200ok",
 			"event": [
 				{
@@ -190,7 +232,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"{{title_task}}\",\r\n    \"description\": \"{{desc_task}}\",\r\n    \"completed\": false,\r\n    \"user_id\": \"63ffe006d933aff713c59ba9\"\r\n}",
+					"raw": "{\r\n    \"title\": \"{{title_task}}\",\r\n    \"description\": \"{{desc_task}}\",\r\n    \"completed\": false,\r\n    \"user_id\": \"{{user_id}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -370,19 +412,19 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}tasks/63ffe006d933aff713c59ba9",
+					"raw": "{{baseUrl}}tasks/{{user_id}}",
 					"host": [
 						"{{baseUrl}}tasks"
 					],
 					"path": [
-						"63ffe006d933aff713c59ba9"
+						"{{user_id}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "/tasks/create - must be user 200ok",
+			"name": "/tasks/:user_id - must be user 200ok",
 			"event": [
 				{
 					"listen": "test",
@@ -419,12 +461,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}tasks/63ffe006d933aff713c59ba9",
+					"raw": "{{baseUrl}}tasks/{{user_id}}",
 					"host": [
 						"{{baseUrl}}tasks"
 					],
 					"path": [
-						"63ffe006d933aff713c59ba9"
+						"{{user_id}}"
 					]
 				}
 			},
