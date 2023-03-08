@@ -47,10 +47,3 @@
 - Agregar endpoint Logout que aplique alguna técnica de inactivación de token. Este endpoint debe estar protegido, pero accesible para cualquier role.
 - Agregar endpoint de DELETE task, que puede ser accedido sólo por el administrador.
 
-
-
-
-
-## BASIC MODEL
-
-![image info](./pictures/model_example.jpg)
